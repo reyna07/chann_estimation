@@ -6,6 +6,12 @@ Channel Estimation is a concept of wireless communication in which the process t
 
 For this project, we aim to imagine the channel as a 2D matrix having two axes depicting the time and frequency response, and turn the problem of channel estimation into an image processing problem, where 2D CNNs commonly used. To speed up the process of inference, we plan to use VCK5000. 
 
+## Model and data acquisition
+The Matlab example:[Deep Learning Data Synthesis for 5G Channel Estimation](https://www.mathworks.com/help/5g/ug/deep-learning-data-synthesis-for-5g-channel-estimation.html) provides us with a pre-trained channel evaluation model, input data for testing, and golden output data as a reference (perfect evaluation, actual channel realization).
+
+## Project realization
+
+
 ## Setting up the project
 1. Follow the [Getting started with VCK5000 Versal devices in OCT](https://github.com/OCT-FPGA/versal-tutorials/blob/main/vck5000-getting-started.md) to set the environment in Open Cloud Testbed.
 
