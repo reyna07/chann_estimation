@@ -33,7 +33,7 @@ cd /docker/Vitis-AI
 4. Setup the Environment Variable after enter the Docker container.
 
 ```
-source /workspace/board_setup/v70/setup.sh DPUCV2DX8G_v70
+source /workspace/board_setup/vck5000/setup.sh DPUCVDX8H_8pe_normal 
 ```
 
 5. Clone this github to Vitis-AI directory
