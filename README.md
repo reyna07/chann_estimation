@@ -19,8 +19,12 @@ $ git clone https://github.com/reyna07/chann_estimation.git
 ```
 
 ## Software Simulation
+1. Get into the `chann_estimation` directory
+```
+$ cd chann_estimation
+```
 
-Run the `run.sh` script to see the software simulation result:
+2. Run the `run.sh` script to see the software simulation result:
 ```
 $ chmod +x run.sh
 $ ./run.sh
