@@ -3,16 +3,28 @@
 ## Introduction
 
 ## Setting up the project
-1. Follow the [Getting started with Alveo V70s in OCT](https://github.com/OCT-FPGA/versal-tutorials/blob/main/v70-getting-started.md) to set the environment in Open Cloud Testbed.
+1. Follow the [Getting started with VCK5000 Versal devices in OCT](https://github.com/OCT-FPGA/versal-tutorials/blob/main/vck5000-getting-started.md) to set the environment in Open Cloud Testbed.
 
    
-2. Setup the Environment Variable after enter the Docker container.
+2. Go to the Vitis-AI directory
+
+```
+cd /docker/Vitis-AI
+```
+
+3. Start the Docker container
+
+```
+./docker_run.sh xilinx/vitis-ai-pytorch-cpu:latest
+```
+
+4. Setup the Environment Variable after enter the Docker container.
 
 ```
 source /workspace/board_setup/v70/setup.sh DPUCV2DX8G_v70
 ```
 
-3. Clone this github to Vitis-AI directory
+5. Clone this github to Vitis-AI directory
 
 ```
 git clone https://github.com/reyna07/chann_estimation.git
