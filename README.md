@@ -1,6 +1,9 @@
 # EECE 7398 FPGAs in the Cloud Project: Channel Estimation
 
 ## Introduction
+Channel Estimation is a concept of wireless communication in which the process tries to figure out the channel characteristics. In all communication systems, data is transmitted from one place to another. The medium which a signal is transmitted through is called the channel. The channel can be both wired and wireless, and it can distort the signal while it passes. To be able to remove the distortion on the signal, we need to know what characteristics the channel carries, and in what way it distorts the signal.  Neural networks have become a popular scheme in channel estimation.
+
+For this project, we aim to imagine the channel as a 2D matrix having two axes depicting the time and frequency response, and turn the problem of channel estimation into an image processing problem, where 2D CNNs commonly used. To speed up the process of inference, we plan to use VCK5000. 
 
 ## Setting up the project
 1. Follow the [Getting started with VCK5000 Versal devices in OCT](https://github.com/OCT-FPGA/versal-tutorials/blob/main/vck5000-getting-started.md) to set the environment in Open Cloud Testbed.
