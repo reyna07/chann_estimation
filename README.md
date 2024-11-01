@@ -1,5 +1,7 @@
 # EECE 7398 FPGAs in the Cloud Project: Channel Estimation
 
+Rana Bogrekci - Chunan Chen
+
 ## Introduction
 Channel Estimation is a concept of wireless communication in which the process tries to figure out the channel characteristics. In all communication systems, data is transmitted from one place to another. The medium which a signal is transmitted through is called the channel. The channel can be both wired and wireless, and it can distort the signal while it passes. To be able to remove the distortion on the signal, we need to know what characteristics the channel carries, and in what way it distorts the signal.  Neural networks have become a popular scheme in channel estimation.
 ![The Process of Channel Estimation with Neural Networks](https://github.com/reyna07/chann_estimation/blob/main/img/ch_estimation_process.png)
