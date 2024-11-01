@@ -54,7 +54,7 @@ chmod +x run.sh
 ./run.sh
 ```
 
-Then, you can see the result:
+Then, you can see the result which shows the MES between SW simulation result and golden output:
 
 ```
 Prediction of the pretrained model has started...
