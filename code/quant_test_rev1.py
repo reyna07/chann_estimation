@@ -37,7 +37,7 @@ quant_model = quantizer.quant_model
 # Define the loss function
 loss_fn = torch.nn.CrossEntropyLoss().to(device)
 
-val_loader, _ = load_data(train=False, batch_size=batch_size, sample_method='random', data_dir=data_dir, model_name=pytorch_model)
+
 
 if quant_mode == 'calib':
     
