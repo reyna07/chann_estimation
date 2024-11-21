@@ -83,12 +83,12 @@ Mean Squared Error between predicted and golden output: 0.0697585865855217
 cd chann_estimation/code
 ```
 
-2. Run the quantization file in calibration mode to generate configuration file. In calibration mode, batch_size is 32.
+2. Run the quantization file in calibration mode to generate configuration file. In calibration mode, `batch_size` is 32.
 ```
 python quant_rev4.py --quant_mode 'calib' --batch_size 32
 ```
 
-3. Run the quantization file in test with deploy mode to generate xmodel. In test mode, the batch_size is 1.
+3. Run the quantization file in test with deploy mode to generate xmodel. In test mode, the `batch_size` is 1 by default.
 ```
 python quant_rev4.py --quant_mode 'test' --deploy
 ```
@@ -97,11 +97,11 @@ python quant_rev4.py --quant_mode 'test' --deploy
 ```
 vai_c_xir -x quantize_result/GraphModule_int.xmodel -a /opt/vitis_ai/compiler/arch/DPUCVDX8H/VCK50006PEDWC/arch.json -o chesti_pt -n chesti_pt
 ```
-In here, `quantize_result/GraphModule_int.xmodel` is the xmodel generated with quantization file. `/opt/vitis_ai/compiler/arch/DPUCVDX8H/VCK50006PEDWC/arch.json ` is the architecture json file corresponding to the target setting. `chesti_pt` is the output directory which the compiled xmodel will be placed with the name `chesti_pt.xmodel`. This compilation is done to  take the quantized INT8.xmodel and generate the deployable DPU.xmodel by running the command above.
+In above command, `quantize_result/GraphModule_int.xmodel` is the xmodel generated with quantization file. The architecture json file corresponding to the target setting is `/opt/vitis_ai/compiler/arch/DPUCVDX8H/VCK50006PEDWC/arch.json `. `chesti_pt` is the output directory in which the compiled xmodel will be placed with the name `chesti_pt.xmodel`. This compilation is done to  take the quantized INT8.xmodel and generate the deployable DPU.xmodel by running the command above.
 
 5. Run the following command to generate the DPU inference result and compare the DPU inference result with the reference data automatically.
 ```
 env XLNX_ENABLE_DUMP=1 XLNX_ENABLE_DEBUG_MODE=1 XLNX_GOLDEN_DIR=./quantize_result/deploy_check_data_int/GraphModule    xdputil run ./chesti_pt/chesti_pt.xmodel ./quantize_result/deploy_check_data_int/GraphModule/GraphModule__input_0.bin 2>result.log 1>&2
 ```
-In here, `XLNX_GOLDEN_DIR=` sets the golden data, `./quantize_result/deploy_check_data_int/GraphModule` is the checking data directory(this directory contains many .bin files),
+Here, `XLNX_GOLDEN_DIR=` sets the golden data, `./quantize_result/deploy_check_data_int/GraphModule` is the checking data directory(this directory contains many .bin files),
 `xdputil run` runs the compiled xmodel in the path `./chesti_pt/chesti_pt.xmodel`.  `./quantize_result/deploy_check_data_int/GraphModule/GraphModule__input_0.bin` is the input bin data path. The results will be generated and saved in `result.log`.
