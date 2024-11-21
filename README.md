@@ -76,7 +76,7 @@ Mean Squared Error between predicted and golden output: 0.0697585865855217
 *****************************************************************************
 
 ```
-##Hardware Simulation 
+## Hardware Simulation 
 
 1. Get into the `chann_estimation/code` directory
 ```
@@ -92,6 +92,20 @@ python quant_rev4.py --quant_mode 'calib' --batch_size 32
 ```
 python quant_rev4.py --quant_mode 'test' --deploy
 ```
+While generating and exporting the xmodel, the test mode also evaluates the model with dummy inputs and gives accuracy results. In command window, results shold be seen like this: 
+
+``` 
+Performing a forward pass...
+
+Mean Squared Error (MSE) is being calculated...
+
+Accuracy as Mean Squared Error (MSE): 0.147015
+
+
+Exporting models...
+
+...
+```
 
 4. Compile the xmodel for DPU. 
 ```
@@ -105,3 +119,5 @@ env XLNX_ENABLE_DUMP=1 XLNX_ENABLE_DEBUG_MODE=1 XLNX_GOLDEN_DIR=./quantize_resul
 ```
 Here, `XLNX_GOLDEN_DIR=` sets the golden data, `./quantize_result/deploy_check_data_int/GraphModule` is the checking data directory(this directory contains many .bin files),
 `xdputil run` runs the compiled xmodel in the path `./chesti_pt/chesti_pt.xmodel`.  `./quantize_result/deploy_check_data_int/GraphModule/GraphModule__input_0.bin` is the input bin data path. The results will be generated and saved in `result.log`.
+
+
