@@ -122,4 +122,19 @@ env XLNX_ENABLE_DUMP=1 XLNX_ENABLE_DEBUG_MODE=1 XLNX_GOLDEN_DIR=./quantize_resul
 Here, `XLNX_GOLDEN_DIR=` sets the golden data, `./quantize_result/deploy_check_data_int/GraphModule` is the checking data directory(this directory contains many .bin files),
 `xdputil run` runs the compiled xmodel in the path `./chesti_pt/chesti_pt.xmodel`.  `./quantize_result/deploy_check_data_int/GraphModule/GraphModule__input_0.bin` is the input bin data path. The results will be generated and saved in `result.log`.
 
+6. Visualize the content of the result file `result.log`.
+```
+vim result.log
+```
+After executing this command, one should be able to see below lines: 
+```
+fillin GraphModule__input_0_fix
+dump output to  0.GraphModule__GraphModule_Conv2d_conv_5__ret_fix.bin
+dump output to  1.GraphModule__GraphModule_Conv2d_conv_5__ret_fix.bin
+dump output to  2.GraphModule__GraphModule_Conv2d_conv_5__ret_fix.bin
+dump output to  3.GraphModule__GraphModule_Conv2d_conv_5__ret_fix.bin
+dump output to  4.GraphModule__GraphModule_Conv2d_conv_5__ret_fix.bin
+dump output to  5.GraphModule__GraphModule_Conv2d_conv_5__ret_fix.bin
 
+```
+This indicates that the binary file `GraphModule__input_0_fix` was loaded as the input data for the model, and the final output from model operations was written to a binary file named `X.GraphModule__GraphModule_Conv2d_conv_5__ret_fix.bin`. Here, X index represents to sequence of the layer outputs. The rest of the binary file's name indicates the fifth convolutional layer's output is being dumped. 
