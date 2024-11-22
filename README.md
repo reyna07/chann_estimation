@@ -78,6 +78,8 @@ Mean Squared Error between predicted and golden output: 0.0697585865855217
 ```
 ## Hardware Simulation 
 
+In this part, we cover the development and deployment of a quantized neural network model for a DPU (Deep Processing Unit) using the Vitis AI tools. The process involves several key steps, including model quantization, evaluation, compilation, and DPU inference. After setting the environment variables and downloading the necessary files by following the `Setting up the project` section, this section can be directly executed. 
+
 1. Get into the `chann_estimation/code` directory
 ```
 cd chann_estimation/code
