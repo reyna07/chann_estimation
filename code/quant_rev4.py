@@ -114,7 +114,8 @@ else:
   quant_model = quantizer.quant_model
 
 # Define the loss function
-loss_fn = torch.nn.CrossEntropyLoss().to(device)
+loss_fn = torch.nn.MSELoss()
+#loss_fn = torch.nn.CrossEntropyLoss().to(device)
 
 # Perform a forward pass to invoke the forward function
 print("Performing a forward pass...\n")
@@ -122,13 +123,37 @@ print("Performing a forward pass...\n")
 output = quant_model(input)
 if quant_mode == 'test':
   loss_final = evaluate(quant_model, input, golden_output_file)
-  print('Accuracy as Mean Squared Error (MSE): %g' % (abs(loss_final)))
-  print("\n")
+
+  input_data=input[0, 0, :, :]
+  test_input=input_data.T
+
+  dim_out=output.shape
+  output_data=output[0, 0, :, :]
+  test_output=output_data
+  test_output_numpy = test_output.detach().numpy()
+
+  # Calculate loss
+  delimiter='\t'
+  with open(golden_output_file, 'r') as file:
+      golden_output = []
+      for line in file:
+          # Split the line into values using the specified delimiter and convert to floats.
+          golden_output.extend(complex(value.replace('i','j')) for value in line.strip().split(delimiter))
+
+  # Convert the golden output list to a PyTorch tensor.
+  golden_tensor = torch.tensor(golden_output, dtype=torch.cfloat)
+  golden_tensor=golden_tensor.real
+  dim_golden=golden_tensor.shape
+  output_T=output_data.T
+  out_flatten=output_T.flatten()
+  dim_outflatten=out_flatten.shape
+  # golden_tensor=golden_tensor.T
+  loss = loss_fn(out_flatten, golden_tensor)
+  
 ##
 #quantizer.load_ft_param()
 
   # to get loss value after evaluation
-loss_fn = torch.nn.MSELoss()
 # For demonstration, create dummy target labels
 # dummy_target = torch.randint(0, 10, (batch_size,), device=device)  # Assuming 10 classes
 
@@ -138,42 +163,19 @@ if quant_mode == 'calib':
   quantizer.export_quant_config()
   print("Config export complete!\n")
 
-input_data=input[0, 0, :, :]
-test_input=input_data.T
-
-dim_out=output.shape
-output_data=output[0, 0, :, :]
-test_output=output_data
-test_output_numpy = test_output.detach().numpy()
-
-
-
-# Calculate loss
-delimiter='\t'
-with open(golden_output_file, 'r') as file:
-    golden_output = []
-    for line in file:
-        # Split the line into values using the specified delimiter and convert to floats.
-        golden_output.extend(complex(value.replace('i','j')) for value in line.strip().split(delimiter))
-
-# Convert the golden output list to a PyTorch tensor.
-golden_tensor = torch.tensor(golden_output, dtype=torch.cfloat)
-golden_tensor=golden_tensor.real
-dim_golden=golden_tensor.shape
-output_T=output_data.T
-out_flatten=output_T.flatten()
-dim_outflatten=out_flatten.shape
-print(f"golden output dimension:{dim_golden}")
-print(f"ref output dimension:{dim_outflatten}")
-# golden_tensor=golden_tensor.T
-loss = loss_fn(out_flatten, golden_tensor)
-print(f"Loss: {loss.item()}")
 
 if deploy:
   print("Exporting models...\n")
   quantizer.export_torch_script()
   quantizer.export_onnx_model()
   quantizer.export_xmodel(deploy_check=True)
+
+  print(f"Golden output dimension:{dim_golden}")
+  print(f"Quantizer output dimension:{dim_outflatten}")
+
+  print('Accuracy as Mean Squared Error (MSE): %g' % (abs(loss_final)))
+  print(f"Loss: {loss.item()}")
+  print("\n")
 
   print("Model export completed!")
 
