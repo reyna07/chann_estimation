@@ -143,9 +143,9 @@ dump output to  5.GraphModule__GraphModule_Conv2d_conv_5__ret_fix.bin
 
 ```
 This indicates that the binary file `GraphModule__input_0_fix` was loaded as the input data for the model, and the final output from model operations was written to a binary file named `X.GraphModule__GraphModule_Conv2d_conv_5__ret_fix.bin`. Here, X index represents to sequence of the layer outputs. The rest of the binary file's name indicates the fifth convolutional layer's output is being dumped. 
+Quit the result.log file
 
-
-## Hardware Run 
+## Runtime Compiling and Deployment
 
 In this part, the created xmodel is deployed to the hardware and the inference is done in the AI Engines of VCK5000 board. After setting the environment variables and downloading the necessary files by following the `Setting up the project` section, this section can be directly executed. 
 
@@ -155,20 +155,37 @@ In this part, the created xmodel is deployed to the hardware and the inference i
 cd /workspace/chann_estimation/code/
 ```
 
-2. Build the C++ that builds the runner.
+2.  Run the `build.sh script`, which call the `ch_estimation_runner_2.cpp` and `ch_estimation_runner_3.cpp`. The .cpp files are C++ code which used Vitis-AI C++ APIs, can compile the loading xmodel and input data into VCK5000, and saving the output data process. The build.sh sets the compile environment, assign the compiled bit file name, and call the g++ compiler to compile these C++ codes.  `ch_estimation_runner_2.cpp` load the quantized xmodel and 2 original input data sets which are same as the software simulation data sets, then saved 2 output data sets to 2 text files. `ch_estimation_runner_3.cpp` load the test input data set which is generated in Quantization step.
 ```
 chmod +x build.sh
 ./build.sh
 ```
 
-3. Run the compiled program.
+2. Check the directory:
+```
+ls
+```
+You can see 2 runtime bit files: `ch_estimation_runner_2` and `ch_estimation_runner_3`.
+
+3. Run `ch_estimation_runner_2` runtime bit file, then check the directory, you can see 2 output text files:`ouput1.txt` and `output2.txt`.
 ```
 ./ch_estimation_runner_2
 ```
 
-4. Observe the results.
+4. Run `ch_estimation_runner_3` runtime bit file, then check the directory, you can see an output text files:`hw_test_ouput.txt`.
+```
+./ch_estimation_runner_3
+```
 
+5. Run the output data process Python code,
 ```
-python ./hardware_result.py
+python hardware_result.py
 ```
+Then you can see the MSE for 3 different hardware output:
+```
+MSE Loss of the hardware result for input1 is: 0.3863668739795685
+MSE of the hardware result for input2 is: 0.393906831741333
+MSE of the hardware result for test_input is: 0.38810738921165466
+```
+
 
