@@ -160,12 +160,7 @@ cd /workspace/chann_estimation/code/
 chmod +x build.sh
 ./build.sh
 ```
-
-2. Check the directory:
-```
-ls
-```
-You can see 2 runtime bit files: `ch_estimation_runner_2` and `ch_estimation_runner_3`.
+Check the directory, you can see 2 runtime bit files: `ch_estimation_runner_2` and `ch_estimation_runner_3`.
 
 3. Run `ch_estimation_runner_2` runtime bit file, then check the directory, you can see 2 output text files:`ouput1.txt` and `output2.txt`.
 ```
