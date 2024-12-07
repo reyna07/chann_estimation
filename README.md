@@ -143,3 +143,32 @@ dump output to  5.GraphModule__GraphModule_Conv2d_conv_5__ret_fix.bin
 
 ```
 This indicates that the binary file `GraphModule__input_0_fix` was loaded as the input data for the model, and the final output from model operations was written to a binary file named `X.GraphModule__GraphModule_Conv2d_conv_5__ret_fix.bin`. Here, X index represents to sequence of the layer outputs. The rest of the binary file's name indicates the fifth convolutional layer's output is being dumped. 
+
+
+## Hardware Run 
+
+In this part, the created xmodel is deployed to the hardware and the inference is done in the AI Engines of VCK5000 board. After setting the environment variables and downloading the necessary files by following the `Setting up the project` section, this section can be directly executed. 
+
+1. Get into the `/worckspace/chann_estimation/code` directory.
+   
+```
+cd /workspace/chann_estimation/code/
+```
+
+2. Build the C++ that builds the runner.
+```
+chmod +x build.sh
+./build.sh
+```
+
+3. Run the compiled program.
+```
+./ch_estimation_runner_2
+```
+
+4. Observe the results.
+
+```
+python ./hardware_result.py
+```
+
