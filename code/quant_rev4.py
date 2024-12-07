@@ -6,6 +6,7 @@ import argparse
 import time
 import pdb
 import random
+import numpy as np
 from pytorch_nndct.apis import torch_quantizer
 import torch
 import torchvision
@@ -127,13 +128,9 @@ if quant_mode == 'test':
 #quantizer.load_ft_param()
 
   # to get loss value after evaluation
-loss_fn = torch.nn.CrossEntropyLoss().to(device)
+loss_fn = torch.nn.MSELoss()
 # For demonstration, create dummy target labels
-#dummy_target = torch.randint(0, 10, (batch_size,), device=device)  # Assuming 10 classes
-
-# Calculate loss
-#loss = loss_fn(output, dummy_target)
-#print(f"Loss: {loss.item()}")
+# dummy_target = torch.randint(0, 10, (batch_size,), device=device)  # Assuming 10 classes
 
 # Export the quantized model
 if quant_mode == 'calib':
@@ -141,6 +138,36 @@ if quant_mode == 'calib':
   quantizer.export_quant_config()
   print("Config export complete!\n")
 
+input_data=input[0, 0, :, :]
+test_input=input_data.T
+
+dim_out=output.shape
+output_data=output[0, 0, :, :]
+test_output=output_data
+test_output_numpy = test_output.detach().numpy()
+
+
+
+# Calculate loss
+delimiter='\t'
+with open(golden_output_file, 'r') as file:
+    golden_output = []
+    for line in file:
+        # Split the line into values using the specified delimiter and convert to floats.
+        golden_output.extend(complex(value.replace('i','j')) for value in line.strip().split(delimiter))
+
+# Convert the golden output list to a PyTorch tensor.
+golden_tensor = torch.tensor(golden_output, dtype=torch.cfloat)
+golden_tensor=golden_tensor.real
+dim_golden=golden_tensor.shape
+output_T=output_data.T
+out_flatten=output_T.flatten()
+dim_outflatten=out_flatten.shape
+print(f"golden output dimension:{dim_golden}")
+print(f"ref output dimension:{dim_outflatten}")
+# golden_tensor=golden_tensor.T
+loss = loss_fn(out_flatten, golden_tensor)
+print(f"Loss: {loss.item()}")
 
 if deploy:
   print("Exporting models...\n")
@@ -149,3 +176,11 @@ if deploy:
   quantizer.export_xmodel(deploy_check=True)
 
   print("Model export completed!")
+
+  print("Exporting test input data...\n")
+  np.savetxt("test_input.txt", test_input, fmt="%.6f")
+  print("Test input data saved to test_input.txt")
+
+  print(f"output dimension is:{dim_out}")
+  np.savetxt("test_output.txt", test_output_numpy, fmt="%.6f")
+  print("Test output data saved to test_output.txt")
