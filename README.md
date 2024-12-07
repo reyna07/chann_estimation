@@ -99,16 +99,19 @@ python quant_rev4.py --quant_mode 'test' --deploy
 While generating and exporting the xmodel, the test mode also evaluates the model with dummy inputs and gives accuracy results. In command window, results shold be seen like this: 
 
 ``` 
-Performing a forward pass...
+Golden output dimension:torch.Size([8568])
+Quantizer output dimension:torch.Size([8568])
+Accuracy as Mean Squared Error (MSE): 0.13897
+Loss: 0.36117637157440186
 
-Mean Squared Error (MSE) is being calculated...
 
-Accuracy as Mean Squared Error (MSE): 0.147015
+Model export completed!
+Exporting test input data...
 
+Test input data saved to test_input.txt
+output dimension is:torch.Size([1, 1, 14, 612])
+Test output data saved to test_output.txt
 
-Exporting models...
-
-...
 ```
 
 4. Compile the xmodel for DPU. 
