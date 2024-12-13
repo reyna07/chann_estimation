@@ -183,4 +183,29 @@ MSE of the hardware result for input2 is: 0.393906831741333
 MSE of the hardware result for test_input is: 0.38810738921165466
 ```
 
+## Evaluation with VAI Profiler
+
+The Vitis AI Profiler is a set of tools used to profile and visualize AI applications based on VART. To use VAI Profiler, first we need to use vaitrace command to generate a .run_summary files and some .csv files. Then save these files to local PC, use Vitis Analyzer to monitor them. 
+The command to use vaitrace:
+
+```
+vaitrace ./ch_estimation_runner_2 ./chesti_pt/chesti_pt.xmodel
+```
+
+Then, in a NERC machine, copy the directory of the files: 
+
+```
+scp -r -i ~/ssh/<your private key> <username>@<node id>.cloudlab.umass.edu:/docker/Vitis-AI/chann_estimation/code/  ~
+```
+An example command would be like this: 
+
+```
+scp -r -i ~/ssh/mykey bogrekci@pc178.cloudlab.umass.edu:/docker/Vitis-AI/chann_estimation/code/  ~
+```
+After copying the files, open Vitis Analyzer from  the command window. 
+
+```
+vitis_analyzer code/xrt.run_summary
+```
+Vitis Analyzer will open and you will be able to visualize the Timeline Trace, Profile Summary etc.
 
